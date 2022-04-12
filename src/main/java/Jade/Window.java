@@ -17,17 +17,14 @@ public class Window {
     private long glfwWindow;
 
     public float r,g,b,a;
-    private boolean FADE_TO_BLACK = false;
-
     private static Window window = null;
-
     private static Scene currentScene = null;
 
 
     private Window(){
         this.width = 1920;
         this.height = 1080;
-        this.title = "Game";
+        this.title = "Gambler";
         r=1;
         g=1;
         b=1;
@@ -38,19 +35,18 @@ public class Window {
     public static void changeScene(int newScene){
         switch(newScene) {
             case 0:
-                currentScene = new LevelEditorScene();
-                //currentScene.init();
+                currentScene = new LevelEditorScene();//each scene can and likely will be its very own unique object
+                currentScene.init();
                 break;
             case 1:
                 currentScene = new LevelScene();
+                currentScene.init();
                 break;
             default:
                 assert false : "Unknown Scene '"+ newScene + "'";
                 break;
 
         }
-
-
     }
 
     public static Window get(){
@@ -79,10 +75,11 @@ public class Window {
     public void init(){
         //setup error callback
         GLFWErrorCallback.createPrint(System.err).set();
+        //this just tells glfw where to print your errors to
 
         //Initialize GLFW
         if( !glfwInit() ){
-            throw new IllegalStateException("GLFW fucked up bro...");
+            throw new IllegalStateException("GLFW fucked up bro... litteraly not sure why lmao");
         }
 
         //Configure GLFW
@@ -105,7 +102,7 @@ public class Window {
 
 
         //make context current for openGl
-        glfwMakeContextCurrent(glfwWindow);
+        glfwMakeContextCurrent(glfwWindow);//set the window you created to be the destination of glfw's graphics output
 
         //enable vsync
         glfwSwapInterval(1);//this locks the framerate to the refresh rate of your monitor
@@ -113,9 +110,9 @@ public class Window {
         //make window visible
         glfwShowWindow(glfwWindow);
 
-        GL.createCapabilities();
+        GL.createCapabilities();//adds openGL capabilities
 
-        Window.changeScene(0);
+        Window.changeScene(0);//change to scene 0 (Scene 0 is the level editor scene)
     }
 
     public void loop(){
