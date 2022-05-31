@@ -37,10 +37,12 @@ public class Window {
             case 0:
                 currentScene = new LevelEditorScene();//each scene can and likely will be its very own unique object
                 currentScene.init();
+                currentScene.start();
                 break;
             case 1:
                 currentScene = new LevelScene();
                 currentScene.init();
+                currentScene.start();
                 break;
             default:
                 assert false : "Unknown Scene '"+ newScene + "'";
@@ -50,6 +52,11 @@ public class Window {
     }
 
     public static Window get(){
+        /**
+            If window is null, create one
+            RETURNS: The Window object
+         */
+
         if(Window.window == null){
             Window.window = new Window();
         }
@@ -62,11 +69,11 @@ public class Window {
         init();
         loop();
 
-        //Free up memory
+        //after loop ends free up memory
         glfwFreeCallbacks(glfwWindow);
         glfwDestroyWindow(glfwWindow);
 
-        //Terminate glfw
+        //Terminate glfw and all dependencies
         glfwTerminate();
         glfwSetErrorCallback(null).free();
 
