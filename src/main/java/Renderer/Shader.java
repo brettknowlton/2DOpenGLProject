@@ -25,8 +25,8 @@ public class Shader {
         this.filepath = filepath;
         try{
             String source = new String(Files.readAllBytes(Paths.get(filepath)));
-            String[] splitString = source.split("(#type)( )+([a-zA-Z]+)");//#todo what the hell can i do with a regex?
-            System.out.println(splitString.length);
+            String[] splitString = source.split("(#type)( )+([a-zA-Z]+)");//#todo what the hell is a regex and what the hell can i do with it?
+            //System.out.println(splitString.length);
 
             //find first pattern after '#type'
             int index = source.indexOf("#type") + 6;
@@ -184,4 +184,9 @@ public class Shader {
         glUniform1i(varLocation, slot);
     }
 
+    public void uploadIntArray(String varName, int[] array){
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        use();
+        glUniform1iv(varLocation, array);
+    }
 }

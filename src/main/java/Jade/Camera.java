@@ -8,6 +8,9 @@ public class Camera {
     private Matrix4f projectionMatrix, viewMatrix;
     private Vector2f position;
 
+    public Camera(){
+
+    }
     public Camera(Vector2f position) {
         this.position = position;
         this.projectionMatrix = new Matrix4f();
@@ -17,7 +20,7 @@ public class Camera {
 
     public void adjustProjection(){
         projectionMatrix.identity();
-        projectionMatrix.ortho(0.0f, 1920.0f,0.0f, 1080.0f, 0, 100);//orthoganify?
+        projectionMatrix.ortho(0.0f, 512.0f,0.0f, 288.0f, 0, 100);//orthoganify?
     }
 
     public Matrix4f getViewMatrix(){

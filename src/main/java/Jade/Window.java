@@ -1,6 +1,5 @@
 package Jade;
 
-import Util.Time;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -25,10 +24,10 @@ public class Window {
         this.width = 1920;
         this.height = 1080;
         this.title = "Gambler";
-        r=1;
-        g=1;
-        b=1;
-        a=1;
+        r = 0.5f;
+        g = 0.5f;
+        b = 0.0f;
+        a = 1;
 
     }
 
@@ -63,6 +62,11 @@ public class Window {
         return window;
     }
 
+    public static Scene getScene(){
+        return get().currentScene;
+    }
+
+
     public void run(){
         System.out.println("Hello JWLGL" + Version.getVersion()+"!");
 
@@ -86,7 +90,7 @@ public class Window {
 
         //Initialize GLFW
         if( !glfwInit() ){
-            throw new IllegalStateException("GLFW fucked up bro... litteraly not sure why lmao");
+            throw new IllegalStateException("GLFW fucked up bro... literally not sure why lmao");
         }
 
         //Configure GLFW
@@ -119,12 +123,15 @@ public class Window {
 
         GL.createCapabilities();//adds openGL capabilities
 
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
         Window.changeScene(0);//change to scene 0 (Scene 0 is the level editor scene)
     }
 
     public void loop(){
-        float beginTime = Time.getTime();
-        float endTime = Time.getTime();
+        float beginTime = (float)glfwGetTime();
+        float endTime;
         float dt = -1.0f;
 
         while(!glfwWindowShouldClose(glfwWindow)){
@@ -140,7 +147,7 @@ public class Window {
             }
 
             glfwSwapBuffers(glfwWindow);
-            endTime = Time.getTime();
+            endTime = (float)glfwGetTime();
             dt = endTime - beginTime;
             beginTime = endTime;
 

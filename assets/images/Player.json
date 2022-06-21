@@ -1,0 +1,83 @@
+{ "frames": {
+   "Player 0.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 20, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 32 },
+    "sourceSize": { "w": 20, "h": 32 },
+    "duration": 100
+   },
+   "Player 1.aseprite": {
+    "frame": { "x": 20, "y": 0, "w": 20, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 32 },
+    "sourceSize": { "w": 20, "h": 32 },
+    "duration": 100
+   },
+   "Player 2.aseprite": {
+    "frame": { "x": 40, "y": 0, "w": 20, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 32 },
+    "sourceSize": { "w": 20, "h": 32 },
+    "duration": 100
+   },
+   "Player 3.aseprite": {
+    "frame": { "x": 60, "y": 0, "w": 20, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 32 },
+    "sourceSize": { "w": 20, "h": 32 },
+    "duration": 100
+   },
+   "Player 4.aseprite": {
+    "frame": { "x": 80, "y": 0, "w": 20, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 32 },
+    "sourceSize": { "w": 20, "h": 32 },
+    "duration": 100
+   },
+   "Player 5.aseprite": {
+    "frame": { "x": 100, "y": 0, "w": 20, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 32 },
+    "sourceSize": { "w": 20, "h": 32 },
+    "duration": 100
+   },
+   "Player 6.aseprite": {
+    "frame": { "x": 120, "y": 0, "w": 20, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 32 },
+    "sourceSize": { "w": 20, "h": 32 },
+    "duration": 100
+   },
+   "Player 7.aseprite": {
+    "frame": { "x": 140, "y": 0, "w": 20, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 32 },
+    "sourceSize": { "w": 20, "h": 32 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.26-x64",
+  "image": "Player.png",
+  "format": "RGBA8888",
+  "size": { "w": 160, "h": 32 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 2", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
