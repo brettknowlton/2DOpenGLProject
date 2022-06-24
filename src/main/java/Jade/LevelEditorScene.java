@@ -1,9 +1,7 @@
 package Jade;
 
 import Util.AssetPool;
-import components.PlayerController;
-import components.SpriteRenderer;
-import components.Spritesheet;
+import components.*;
 import org.joml.Vector2f;
 
 public class LevelEditorScene extends Scene {
@@ -16,14 +14,23 @@ public class LevelEditorScene extends Scene {
         loadResources();
         this.camera = new Camera(new Vector2f(0, 0));
 
-        Spritesheet sprites = AssetPool.getSpritesheet("assets/images/TheGambler.run.png");
+        Spritesheet sprites = AssetPool.getSpritesheet("assets/images/Player.png");
 
-        obj1 = new GameObject("Object 1",
+        //The following will eventually become code for the player class
+        obj1 = new GameObject("Player",
                 new Transform(new Vector2f(100,100), new Vector2f(24,36)),
                 0);
-        obj1.addComponent(new PlayerController());
+        obj1.addComponent(new Physics());
+
         obj1.addComponent(new SpriteRenderer(sprites.getSprite(1)));
+        obj1.addComponent(new PlayerController());
+        obj1.addComponent(new SpriteAnimator(new int[]{0}, 0.1f, AssetPool.getSpritesheet("assets/images/Player.png")));
+
+
         this.addGameObjectToScene(obj1);
+
+
+
 
         obj2 = new GameObject("Object 2",
                 new Transform(new Vector2f(200, 100), new Vector2f(24, 36)),
@@ -38,8 +45,8 @@ public class LevelEditorScene extends Scene {
         AssetPool.getShader("assets/shaders/default.glsl");
         AssetPool.getTexture("assets/images/Stars.jpg");
 
-        AssetPool.addSpritesheet("assets/images/TheGambler.run.png",
-                new Spritesheet(AssetPool.getTexture("assets/images/TheGambler.run.png"),24, 36, 6, 0));
+        AssetPool.addSpritesheet("assets/images/Player.png",
+                new Spritesheet(AssetPool.getTexture("assets/images/Player.png"),24, 36, 20, 0));
     }
 
 
@@ -49,18 +56,9 @@ public class LevelEditorScene extends Scene {
     @Override
     public void update(float dt) {
         //System.out.println("FPS: " + (1.0f / dt));
-
-        spriteFlipTimeLeft -= dt;
-        if(spriteFlipTimeLeft <= 0){
-            spriteFlipTimeLeft = spriteFlipTime;
-            spriteIndex = (spriteIndex + 1) %4;
-        }
-
         for (GameObject go : this.gameObjects) {
             go.update(dt);
         }
-        obj1.getComponent(SpriteRenderer.class).setSprite(AssetPool.getSpritesheet("assets/images/TheGambler.run.png").getSprite(spriteIndex));
-
 
         //get the sprite renderer for obj1,     set the sprite to:  go into the correct spritesheet for this object,                find which one you currently have, and get the next one                                    make sure to loop it^
         this.renderer.render();

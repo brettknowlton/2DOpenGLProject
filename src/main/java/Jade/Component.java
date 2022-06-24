@@ -8,5 +8,18 @@ public abstract class Component {
 
     public abstract void start();
 
+    public <T extends Component> T getSiblingComponent(Class<T> componentClass){
+        for(Component c : gameObject.getComponents()) {
+            if (componentClass.isAssignableFrom(c.getClass())) {
+                try {
+                    return componentClass.cast(c);
+                } catch (ClassCastException e){
+                    e.printStackTrace();
+                    assert false : "Error casting component";
+                }
+            }
+        }
+        return null;
+    }
 
 }

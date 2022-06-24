@@ -65,6 +65,9 @@ public class GameObject {
         }
     }
 
+    public List<Component> getComponents() {
+        return components;
+    }
     public String getName(){
         return this.name;
     }
