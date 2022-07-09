@@ -1,6 +1,6 @@
 import Jade.Window;
-
-public class Main {
+import imgui.ImGui;
+public class Main{
 
     public static void  main(String[] args){
         Window window = Window.get();

@@ -6,6 +6,9 @@ public class Transform {
     public Vector2f position;
     public Vector2f scale;
 
+    public GameObject gameObject;
+    public float left, right, top, bottom;
+
     public Transform() {
         init(new Vector2f(), new Vector2f());
     }
@@ -39,4 +42,15 @@ public class Transform {
         Transform t = (Transform)o;
         return t.position.equals(this.position) && t.scale.equals(this.scale);
     }
+
+    public boolean intersects(Transform t){
+        if (position.x + scale.x > t.position.x &&    // r1 right edge past r2 left
+                position.x < t.position.x + t.scale.x &&    // r1 left edge past r2 right
+                position.y + scale.y > t.position.y &&    // r1 top edge past r2 bottom
+                position.y < t.position.y + t.scale.y) {    // r1 bottom edge past r2 top
+            return true;
+        }
+        return false;
+    }
+
 }

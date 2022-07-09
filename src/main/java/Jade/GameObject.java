@@ -5,7 +5,8 @@ import java.util.List;
 
 public class GameObject {
 
-    private String name;
+    public Scene scene;
+    public String name;
     private List<Component> components;
     public Transform transform;
     private int zIndex;
@@ -14,6 +15,7 @@ public class GameObject {
         this.name = name;
         this.components = new ArrayList<>();
         this.transform = new Transform();
+        this.transform.gameObject = this;
         this.zIndex = 0;
     }
 
@@ -22,8 +24,11 @@ public class GameObject {
         this.zIndex = zIndex;
         this.components = new ArrayList<>();
         this.transform = transform;
-        this.zIndex = 0;
+        this.transform.gameObject = this;
+
+        this.zIndex = zIndex;
     }
+
     public <T extends Component> T getComponent(Class<T> componentClass){
         for(Component c : components) {
             if (componentClass.isAssignableFrom(c.getClass())) {
@@ -48,9 +53,10 @@ public class GameObject {
         }
     }
 
-    public void addComponent(Component c){
+    public Component addComponent(Component c){
         this.components.add(c);
         c.gameObject = this;
+        return c;
     }
 
     public void update(float dt){
