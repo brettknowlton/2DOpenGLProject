@@ -89,13 +89,13 @@ public class Player extends GameObject{
 
         if (KeyListener.isKeyPressed(' ')){
             if(boxPhysics.isOnGround()){
-
-                boxPhysics.yMomentum = 288;
                 boxPhysics.setOnGround(false);
+                boxPhysics.yMomentum = 288;
             }
             if (facingRight){animator.setIndexes(JUMP_ANIMATIONR);}
             else{animator.setIndexes(JUMP_ANIMATIONL);}
-        }else if(! boxPhysics.isOnGround()){//if space is not pressed
+
+        }else if(! boxPhysics.isOnGround()){//if space is not pressed and we are not on the ground
 
             if (facingRight){animator.setIndexes(FALL_ANIMATIONR);}
             else{animator.setIndexes(FALL_ANIMATIONL);}

@@ -13,7 +13,8 @@ public class BoxPhysics extends Component {
 
     public Player player;
     private boolean[] collision_types = {false, false, false, false};
-    //                                   top,   bottom,left,  right
+    //         we are colliding on the:  top,   bottom,left,  right
+
     private Vector2f vel = new Vector2f(0,0);
     public float yMomentum = 0;
     public float xMomentum = 0;
@@ -33,7 +34,7 @@ public class BoxPhysics extends Component {
         xVelPhysics(dt);
         yVelPhysics(dt);
 
-        System.out.println("1: premove "+player.hitbox.position.x+" , "+player.hitbox.position.y);
+        System.out.println("1: premove "+(player.hitbox.position.x + vel.x)+" , "+(player.hitbox.position.y+vel.y));
 
         //player.hitbox.position.add(vel.x, vel.y);
 
@@ -47,34 +48,28 @@ public class BoxPhysics extends Component {
 
     public void xVelPhysics(float dt){
         if(player.movingRight){
-            xMomentum = Math.min(xMomentum +25, 100);
+            xMomentum = Math.min(xMomentum +25, 1600);
         }else if(player.movingLeft){
-            xMomentum = Math.max(xMomentum -25, -100);
+            xMomentum = Math.max(xMomentum -25, -1600);
         }
 
         xMomentum *= .9;//5% falloff in x speed per frame
         if(Math.abs(xMomentum) < .5f){//give the processor a break and set to zero under a certain speed
             xMomentum = 0;
         }
-        vel.x = xMomentum;
+        vel.x = xMomentum * dt * 16;
 
     }
 
     private void yVelPhysics(float dt) {
 
-        yMomentum = Math.max(yMomentum - 10, -288);
-        if (!onGround) {
-            if (vel.y <= 0) {
-                vel.y += yMomentum;
-            } else {
-                vel.y += yMomentum / 2;
-            }
-
-        }else{
-            yMomentum = -0.1f;
+        yMomentum = Math.max(yMomentum - 10, -200);
+        if (vel.y <= 0) {
             vel.y += yMomentum;
+        } else {
+            vel.y += (yMomentum / 2);
         }
-        vel.y = Math.max(vel.y, -288);//cap falling velocity at the speed of gravity (288p/s)
+        vel.y = vel.y + (dt*16);
 
     }
 
@@ -100,9 +95,11 @@ public class BoxPhysics extends Component {
             System.out.println(boxes.get(i).gameObject.name);
             if(vel.x > 0){
                 player.hitbox.position.x = boxes.get(i).position.x - player.hitbox.scale.x - 1;
+                xMomentum = 0;
                 collision_types[3] = true;
             }else if(vel.x < 0){
                 player.hitbox.position.x =boxes.get(i).position.x + boxes.get(i).scale.x + 1;
+                xMomentum = 0;
                 collision_types[2] = true;
             }
         }
@@ -112,14 +109,19 @@ public class BoxPhysics extends Component {
         boxes = getCollisions(tiles);
 
         for(int i=0;i<boxes.size(); i++){
-            System.out.println("this bitch is finally colliding (BoxPhysics.move)");
+            System.out.println(boxes.get(i).gameObject.name);
             if(vel.y > 0){
                 player.hitbox.position.y =boxes.get(i).position.y - player.hitbox.scale.y;
                 collision_types[0] = true;
             }else if(vel.y < 0){
                 collision_types[1] = true;
                 onGround = true;
+                yMomentum = 0;
                 player.hitbox.position.y = boxes.get(i).position.y + boxes.get(i).scale.y;
+            }
+            if(boxes.size() == 0){//if we did not collide with any boxes we must not be on the ground
+                System.out.println("hit");
+                onGround = false;
             }
         }
 
@@ -132,7 +134,6 @@ public class BoxPhysics extends Component {
 
     @Override
     public void start() {
-
     }
 
     public boolean isOnGround(){
