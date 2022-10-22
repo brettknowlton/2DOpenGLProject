@@ -20,11 +20,12 @@ public class Player extends GameObject{
 
 
     public boolean facingRight = true;
-
     public boolean movingRight = false;
     public boolean movingLeft = false;
 
-
+    int jumpcount = 0;
+    int maxJumps = 2;
+    boolean hasReleasedSinceLastJump=true;
 
 
     private BoxPhysics boxPhysics;
@@ -80,7 +81,7 @@ public class Player extends GameObject{
             movingRight = true;
             animator.setIndexes(WALK_ANIMATIONR);
         }
-        if(! (KeyListener.isKeyPressed('D') || KeyListener.isKeyPressed('A')) || (KeyListener.isKeyPressed('D') && KeyListener.isKeyPressed('A'))){//basically: if not pressing a OR d
+        if(! (KeyListener.isKeyPressed('A') || KeyListener.isKeyPressed('D')) || (KeyListener.isKeyPressed('A') && KeyListener.isKeyPressed('D'))){//basically: if not pressing a OR d
             if(facingRight){animator.setIndexes(IDLE_ANIMATIONR);
             }else{animator.setIndexes(IDLE_ANIMATIONL);}
             movingLeft = false;
@@ -88,23 +89,28 @@ public class Player extends GameObject{
         }
 
         if (KeyListener.isKeyPressed(' ')){
-            if(boxPhysics.isOnGround()){
+            if(jumpcount<maxJumps && hasReleasedSinceLastJump){
                 boxPhysics.setOnGround(false);
+                hasReleasedSinceLastJump = false;
+                jumpcount +=1;
                 boxPhysics.yMomentum = 288;
+                if (facingRight){animator.setIndexes(JUMP_ANIMATIONR);}
+                else{animator.setIndexes(JUMP_ANIMATIONL);}
             }
-            if (facingRight){animator.setIndexes(JUMP_ANIMATIONR);}
-            else{animator.setIndexes(JUMP_ANIMATIONL);}
-
-        }else if(! boxPhysics.isOnGround()){//if space is not pressed and we are not on the ground
-
+        }else{
+            hasReleasedSinceLastJump=true;
+        }
+        if(!(KeyListener.isKeyPressed(' ') || boxPhysics.isOnGround())){//if space is not pressed, and we are not on the ground USE FALL ANIMATION
             if (facingRight){animator.setIndexes(FALL_ANIMATIONR);}
             else{animator.setIndexes(FALL_ANIMATIONL);}
         }
 
-        //control sprites offset from hitbox
-
-
+        if(boxPhysics.isOnGround()){
+            jumpcount= 0;
+        }
         super.update(dt);
+
+        //control sprites offset from hitbox
         if(facingRight){
             transform.position.x = hitbox.position.x - 10;
         }else{

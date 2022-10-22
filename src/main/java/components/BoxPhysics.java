@@ -34,12 +34,12 @@ public class BoxPhysics extends Component {
         xVelPhysics(dt);
         yVelPhysics(dt);
 
-        System.out.println("1: premove "+(player.hitbox.position.x + vel.x)+" , "+(player.hitbox.position.y+vel.y));
+        //System.out.println("1: premove "+(player.hitbox.position.x + vel.x)+" , "+(player.hitbox.position.y+vel.y));
 
         //player.hitbox.position.add(vel.x, vel.y);
 
         move(dt, this.gameObject.scene.boxes);
-        System.out.println("2: fixed posititons "+player.hitbox.position.x+" , "+player.hitbox.position.y);
+        //System.out.println("2: fixed posititons "+player.hitbox.position.x+" , "+player.hitbox.position.y);
 
 
     }
@@ -48,28 +48,28 @@ public class BoxPhysics extends Component {
 
     public void xVelPhysics(float dt){
         if(player.movingRight){
-            xMomentum = Math.min(xMomentum +25, 1600);
+            xMomentum = Math.min(xMomentum +16, 300);
         }else if(player.movingLeft){
-            xMomentum = Math.max(xMomentum -25, -1600);
+            xMomentum = Math.max(xMomentum -16, -300);
         }
 
         xMomentum *= .9;//5% falloff in x speed per frame
         if(Math.abs(xMomentum) < .5f){//give the processor a break and set to zero under a certain speed
             xMomentum = 0;
         }
-        vel.x = xMomentum * dt * 16;
+        vel.x = xMomentum;
 
     }
 
     private void yVelPhysics(float dt) {
 
-        yMomentum = Math.max(yMomentum - 10, -200);
+        yMomentum = Math.max(yMomentum - 10, -300);
         if (vel.y <= 0) {
             vel.y += yMomentum;
         } else {
             vel.y += (yMomentum / 2);
         }
-        vel.y = vel.y + (dt*16);
+        vel.y = vel.y + 16;
 
     }
 
@@ -84,6 +84,22 @@ public class BoxPhysics extends Component {
     }
 
     private void move(float dt, List<Transform> tiles){
+        /*
+            INPUT:
+                dt: the amount of time that has passed (in milliseconds) since last update
+                tiles: a list of each tile in the current scene
+
+            OUTPUT:
+                    NULL RETURN
+                    this function applies a movement on the component's owner and pushes the owner outside of any tiles
+                    to obtain collision
+
+                    apply x velocity and then check that there are no new collisions
+                        if there are set the players x to be inline with the edge of the tile
+
+                    apply y velocity and then check that there are no new collisions
+                        if there are set the players y to be inline with the edge of the tile
+         */
 
 
         //apply x velocity and then check that there are no new collisions
@@ -92,13 +108,12 @@ public class BoxPhysics extends Component {
         List<Transform> boxes = getCollisions(tiles);//boxes is all the hitboxes that we are colliding with
 
         for(int i=0;i<boxes.size(); i++){//boxes is all the hitboxes that we are colliding with
-            System.out.println(boxes.get(i).gameObject.name);
             if(vel.x > 0){
-                player.hitbox.position.x = boxes.get(i).position.x - player.hitbox.scale.x - 1;
+                player.hitbox.position.x = boxes.get(i).position.x - player.hitbox.scale.x - 1;//set x position to edge
                 xMomentum = 0;
                 collision_types[3] = true;
             }else if(vel.x < 0){
-                player.hitbox.position.x =boxes.get(i).position.x + boxes.get(i).scale.x + 1;
+                player.hitbox.position.x =boxes.get(i).position.x + boxes.get(i).scale.x + 1;//set x position to edge
                 xMomentum = 0;
                 collision_types[2] = true;
             }
@@ -109,27 +124,17 @@ public class BoxPhysics extends Component {
         boxes = getCollisions(tiles);
 
         for(int i=0;i<boxes.size(); i++){
-            System.out.println(boxes.get(i).gameObject.name);
             if(vel.y > 0){
-                player.hitbox.position.y =boxes.get(i).position.y - player.hitbox.scale.y;
+                player.hitbox.position.y = boxes.get(i).position.y - player.hitbox.scale.y;
                 collision_types[0] = true;
+                yMomentum = -100;
             }else if(vel.y < 0){
                 collision_types[1] = true;
                 onGround = true;
                 yMomentum = 0;
                 player.hitbox.position.y = boxes.get(i).position.y + boxes.get(i).scale.y;
             }
-            if(boxes.size() == 0){//if we did not collide with any boxes we must not be on the ground
-                System.out.println("hit");
-                onGround = false;
-            }
         }
-
-
-
-
-
-
     }
 
     @Override
