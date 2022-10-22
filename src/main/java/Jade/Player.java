@@ -24,7 +24,7 @@ public class Player extends GameObject{
     public boolean movingLeft = false;
 
     int jumpcount = 0;
-    int maxJumps = 2;
+    int maxJumps = 3;
     boolean hasReleasedSinceLastJump=true;
 
 
