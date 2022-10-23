@@ -20,8 +20,6 @@ public class BoxPhysics extends Component {
     public float xMomentum = 0;
 
     public BoxPhysics(){
-
-
     }
 
     @Override
@@ -63,14 +61,17 @@ public class BoxPhysics extends Component {
 
     private void yVelPhysics(float dt) {
 
-        yMomentum = Math.max(yMomentum - 10, -300);
-        if (vel.y <= 0) {
-            vel.y += yMomentum;
-        } else {
-            vel.y += (yMomentum / 2);
+        yMomentum = Math.max(yMomentum - (dt*1000), -300);
+        if(! onGround) {
+            System.out.println(yMomentum);
+            if (vel.y < 0) {
+                vel.y += yMomentum;
+            } else {
+                vel.y += (yMomentum);
+            }
+        }else{
+            vel.y = -dt;
         }
-        vel.y = vel.y + 16;
-
     }
 
     private List<Transform> getCollisions(List<Transform> tiles){
@@ -127,7 +128,7 @@ public class BoxPhysics extends Component {
             if(vel.y > 0){
                 player.hitbox.position.y = boxes.get(i).position.y - player.hitbox.scale.y;
                 collision_types[0] = true;
-                yMomentum = -100;
+                yMomentum = -yMomentum;
             }else if(vel.y < 0){
                 collision_types[1] = true;
                 onGround = true;
@@ -135,6 +136,7 @@ public class BoxPhysics extends Component {
                 player.hitbox.position.y = boxes.get(i).position.y + boxes.get(i).scale.y;
             }
         }
+        if(boxes.size()== 0){onGround= false;}
     }
 
     @Override

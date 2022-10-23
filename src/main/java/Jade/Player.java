@@ -81,7 +81,7 @@ public class Player extends GameObject{
             movingRight = true;
             animator.setIndexes(WALK_ANIMATIONR);
         }
-        if(! (KeyListener.isKeyPressed('A') || KeyListener.isKeyPressed('D')) || (KeyListener.isKeyPressed('A') && KeyListener.isKeyPressed('D'))){//basically: if not pressing a OR d
+        if(KeyListener.isKeyPressed('A') == KeyListener.isKeyPressed('D')){//basically: if not pressing a OR d
             if(facingRight){animator.setIndexes(IDLE_ANIMATIONR);
             }else{animator.setIndexes(IDLE_ANIMATIONL);}
             movingLeft = false;
@@ -90,10 +90,13 @@ public class Player extends GameObject{
 
         if (KeyListener.isKeyPressed(' ')){
             if(jumpcount<maxJumps && hasReleasedSinceLastJump){
-                boxPhysics.setOnGround(false);
                 hasReleasedSinceLastJump = false;
                 jumpcount +=1;
+
+                boxPhysics.setOnGround(false);
                 boxPhysics.yMomentum = 288;
+
+                //sprite control
                 if (facingRight){animator.setIndexes(JUMP_ANIMATIONR);}
                 else{animator.setIndexes(JUMP_ANIMATIONL);}
             }
