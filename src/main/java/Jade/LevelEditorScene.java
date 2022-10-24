@@ -65,14 +65,6 @@ public class LevelEditorScene extends Scene{
         for (GameObject go : this.gameObjects) {
             go.update(dt);
         }
-        /*
-        if(obj2.transform.intersects(obj1.transform)){
-            if(obj2.getComponent(BoxPhysics.class) == null){
-                obj2.addComponent(new BoxPhysics(obj2.transform));
-            }
-        }
-
-         */
 
         //get the sprite renderer for obj1,     set the sprite to:  go into the correct spritesheet for this object,                find which one you currently have, and get the next one                                    make sure to loop it^
         this.renderer.render();

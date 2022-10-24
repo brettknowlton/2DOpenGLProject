@@ -9,6 +9,10 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImage.*;
 
 public class Texture {
+    /*
+        This class generates a texture through OpenGL and binds a source image to the texture
+        It will test for the image style and attempt to apply transparency correctly
+     */
     private String filepath;
     private int texID;
     private int width, height;

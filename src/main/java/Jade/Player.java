@@ -61,8 +61,6 @@ public class Player extends GameObject{
         }else{
             hitbox.position.x = transform.position.x + 2;
         }
-
-
         super.start();
     }
 
@@ -121,5 +119,10 @@ public class Player extends GameObject{
         }
         transform.position.y = hitbox.position.y;
 
+    }
+
+    public boolean oob(){
+        //todo if player is off the screen or out of bounds return true, otherwise return false
+        return false;
     }
 }

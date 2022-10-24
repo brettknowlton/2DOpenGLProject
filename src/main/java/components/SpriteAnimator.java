@@ -3,6 +3,11 @@ package components;
 import Jade.Component;
 
 public class SpriteAnimator extends Component {
+    /*
+        When this component is added to an object it will animate the sprite over all given indexes.
+        An array can be sent to this class and every given time step it will make the gameObject roll over to the next sprite - causing animation
+        see the player class for examples
+     */
 
     private int[] indexes;
     private int currentIndex;

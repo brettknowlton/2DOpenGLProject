@@ -9,6 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoxPhysics extends Component {
+    /*
+        THIS IS THE MOST COMPLICATED COMPONENT SO FAR SO READ CAREFULLY
+        THIS COMPONENT WILL ONLY WORK IF THE SCENE HAS AN APPROPRIATE TILEMAP
+
+        this component when added to a game object causes it to fall with gravity
+        and be interactive with the tilemap of the current scene
+
+        it will also respond to the player's movingRight, movingLeft etc. fields
+
+
+
+     */
     private boolean onGround = true;
 
     public Player player;

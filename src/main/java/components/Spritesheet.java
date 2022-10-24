@@ -7,6 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Spritesheet {
+    /*
+        A spritesheet takes in a texture but actually will break up the texture into individual sprites
+
+        INPUTS:
+        texture to parse sprites from
+        spriteWidth: the width of each sprite
+        spriteHeight: the height of each sprite
+        spacing: the space between each sprite (typically 0)
+
+
+        sprites are indexed in a List (Spritesheet.sprites) that can be pulled from with the getSprite() method
+     */
 
     private Texture texture;
     private List<Sprite> sprites;

@@ -6,6 +6,11 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 public class SpriteRenderer extends Component {
+    /*
+        Long story short this class controlls a flag to tell the renderer when to update a sprite
+        the sprite will update if it is created, moved, or changed to a different source image
+
+     */
     private Vector4f color;
     private Sprite sprite;
 

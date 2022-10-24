@@ -18,6 +18,9 @@ public class Window {
     public float r,g,b,a;
     private static Window window = null;
     private static Scene currentScene = null;
+    enum Screen{
+        TITLE, GAME, PAUSE
+    }
 
 
     private Window(){
@@ -43,6 +46,7 @@ public class Window {
                 currentScene.init();
                 currentScene.start();
                 break;
+
             default:
                 assert false : "Unknown Scene '"+ newScene + "'";
                 break;
